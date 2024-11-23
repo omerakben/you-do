@@ -1,0 +1,22 @@
+{
+    "todos": {
+        "uniqueKey1": {
+            "id": 1,
+            "title": "Buy Milk",
+            "description": "Buy 2 litres of milk from the store",
+            "priority": "high",
+            "createdAt": "2024-11-23T10:00:00",
+            "updatedAt": "2024-11-23T11:10:00",
+            "completed": false
+        },
+        "uniqueKey2": {
+            "id": 2,
+            "title": "Buy Bread",
+            "description": "Buy 1 loaf of bread from the store",
+            "priority": "medium",
+            "createdAt": "2024-11-23T10:00:00",
+            "updatedAt": "2024-11-23T11:10:00",
+            "completed": false
+        }
+    }
+}
