@@ -116,3 +116,29 @@ As a user, when I complete the form to submit a YOU-DO, the newly created YOU-DO
 As a user, I should be able to edit a YOU-DO using the same form used to create a YOU-DO.
 As a user, when I edit a YOU-DO and submit it, I should see the updated YOU-DO on the DOM under the chosen category.
 As an engineering hiring manager, I want to see a README that reflects the details of the project with the software engineers details and not THESE instructions.
+
+
+## RoadMap : 
+### Phase 1: Setup & Structure
+- [ ] Create CRUD operations for todos in a new todoAPI.js file
+- [ ] Implement todo components (TodoForm, TodoList, TodoCard)
+- [ ] Update main.js to use ViewDirector
+- [ ] Add navigation/navbar component
+### Phase 2: Features
+- [ ] Add todo creation form
+- [ ] Implement todo listing with filtering options
+- [ ] Add edit/delete functionality
+- [ ] Implement priority sorting
+- [ ] Add completion status toggle
+### Phase 3: Enhancement
+- [ ] Add data validation
+- [ ] Implement error handling
+- [ ] Add loading states
+- [ ] Implement search functionality
+- [ ] Add sorting by different fields
+### Phase 4: UI/UX
+- [ ] Improve styling with Bootstrap
+- [ ] Add animations for actions
+- [ ] Implement responsive design
+- [ ] Add confirmation dialogs
+- [ ] Implement toast notifications
