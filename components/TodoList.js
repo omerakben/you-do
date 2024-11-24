@@ -7,18 +7,8 @@ const TodoList = async (user) => {
     <div class="todo-container">
       <div class="d-flex justify-content-between align-items-center mb-3">
         <h2>My Todo List</h2>
-        <button class="btn btn-success" id="add-todo-btn">
-          <i class="fas fa-plus"></i> Add New Todo
-        </button>
       </div>
-      <div class="todo-filters mb-3">
-        <div class="btn-group" role="group">
-          <button class="btn btn-outline-primary" data-filter="all">All</button>
-          <button class="btn btn-outline-primary" data-filter="active">Active</button>
-          <button class="btn btn-outline-primary" data-filter="completed">Completed</button>
-        </div>
-      </div>
-      <div id="todo-cards" class="row"></div>
+      <div id="todo-cards" class="row row-cols-1 row-cols-md-3 g-4"></div>
     </div>
   `;
 
@@ -29,7 +19,11 @@ const TodoList = async (user) => {
     let cards = '';
 
     if (todos.length) {
-      todos.forEach((todo) => {
+      // Sort todos by priority (high -> medium -> low)
+      const priorityOrder = { high: 1, medium: 2, low: 3 };
+      const sortedTodos = todos.sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
+
+      sortedTodos.forEach((todo) => {
         cards += TodoCard(todo);
       });
     } else {

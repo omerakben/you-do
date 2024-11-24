@@ -3,21 +3,29 @@ import TodoList from './TodoList';
 
 const TodoForm = (user, obj = {}) => {
   const domString = `
-    <form id="${obj.firebaseKey ? `update-todo--${obj.firebaseKey}` : 'submit-todo'}" class="mb-4">
-      <div class="form-group">
-        <label for="title">Todo Title</label>
-        <input type="text" class="form-control" id="title" placeholder="Enter Todo" value="${obj.title || ''}" required>
+    <form id="${obj.firebaseKey ? `update-todo--${obj.firebaseKey}` : 'submit-todo'}" class="todo-form">
+      <div class="form-group mb-3">
+        <label for="title" class="form-label">To-Do Title</label>
+        <input type="text" class="form-control" id="title" placeholder="Enter To-Do" value="${obj.title || ''}" required>
       </div>
-      <div class="form-group">
-        <label for="description">Description</label>
+      <div class="form-group mb-3">
+        <label for="description" class="form-label">Description</label>
         <textarea class="form-control" id="description" rows="3" required>${obj.description || ''}</textarea>
       </div>
-      <div class="form-group">
-        <label for="priority">Priority</label>
+      <div class="form-group mb-3">
+        <label for="priority" class="form-label">Priority</label>
         <select class="form-control" id="priority" required>
           <option value="high" ${obj.priority === 'high' ? 'selected' : ''}>High</option>
           <option value="medium" ${obj.priority === 'medium' ? 'selected' : ''}>Medium</option>
           <option value="low" ${obj.priority === 'low' ? 'selected' : ''}>Low</option>
+        </select>
+      </div>
+      <div class="form-group mb-3">
+        <label for="status" class="form-label">Status</label>
+        <select class="form-control" id="status" required>
+          <option value="Ready to Start" ${obj.status === 'Ready to Start' ? 'selected' : ''}>Ready to Start</option>
+          <option value="In Progress" ${obj.status === 'In Progress' ? 'selected' : ''}>In Progress</option>
+          <option value="Done" ${obj.status === 'Done' ? 'selected' : ''}>Done</option>
         </select>
       </div>
       <button type="submit" class="btn btn-primary">
@@ -30,11 +38,12 @@ const TodoForm = (user, obj = {}) => {
   // Form Submit Handler
   document.querySelector(`#${obj.firebaseKey ? `update-todo--${obj.firebaseKey}` : 'submit-todo'}`).addEventListener('submit', (e) => {
     e.preventDefault();
+    const formContainer = document.querySelector('#form-container');
     const todoObj = {
       title: document.querySelector('#title').value,
       description: document.querySelector('#description').value,
       priority: document.querySelector('#priority').value,
-      completed: obj.completed || false,
+      status: document.querySelector('#status').value,
       uid: user.uid,
       createdAt: obj.createdAt || new Date().toISOString(),
       updatedAt: new Date().toISOString(),
@@ -43,10 +52,14 @@ const TodoForm = (user, obj = {}) => {
     if (obj.firebaseKey) {
       updateTodo({ ...todoObj, firebaseKey: obj.firebaseKey })
         .then(() => {
+          formContainer.classList.remove('active');
+          formContainer.innerHTML = '';
           TodoList(user);
         });
     } else {
       createTodo(todoObj).then(() => {
+        formContainer.classList.remove('active');
+        formContainer.innerHTML = '';
         TodoList(user);
       });
     }
