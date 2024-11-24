@@ -99,7 +99,7 @@ npm install
 ```
 
 3. Configure Firebase
-- Create a `.env` file in the root directory
+- Create a `.env` file in the root directory (template is `.example.env` )
 - Add your Firebase configuration:
 ```env
 APP_API_KEY="your-api-key"
@@ -111,7 +111,7 @@ APP_APP_ID="your-app-id"
 APP_MEASUREMENT_ID="your-measurement-id"
 ```
 
-4. Start the development server
+1. Start the development server
 ```bash
 npm start
 ```
