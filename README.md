@@ -144,6 +144,11 @@ npm start
 
 Omer (Ozzy) Akben - [E-Mail](mailto:akbenof@gmail.com)
 
+
+Project Link: [Github](https://github.com/omerakben/you-do)
+
+SVG Link : [SVG](https://www.svgrepo.com/collection/wolf-kit-rounded-line-icons/)
+
 Project Link: [GitHub](https://github.com/omerakben/you-do)
 
 Deployed URL: [Netlify](https://todo-e29.netlify.app/)

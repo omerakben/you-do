@@ -15,9 +15,11 @@ const TodoForm = (user, obj = {}) => {
       <div class="form-group mb-3">
         <label for="priority" class="form-label">Priority</label>
         <select class="form-control" id="priority" required>
+          <option value="critical" ${obj.priority === 'critical' ? 'selected' : ''}>Critical</option>
           <option value="high" ${obj.priority === 'high' ? 'selected' : ''}>High</option>
           <option value="medium" ${obj.priority === 'medium' ? 'selected' : ''}>Medium</option>
           <option value="low" ${obj.priority === 'low' ? 'selected' : ''}>Low</option>
+          <option value="trivial" ${obj.priority === 'trivial' ? 'selected' : ''}>Trivial</option>
         </select>
       </div>
       <div class="form-group mb-3">
@@ -25,20 +27,21 @@ const TodoForm = (user, obj = {}) => {
         <select class="form-control" id="status" required>
           <option value="Ready to Start" ${obj.status === 'Ready to Start' ? 'selected' : ''}>Ready to Start</option>
           <option value="In Progress" ${obj.status === 'In Progress' ? 'selected' : ''}>In Progress</option>
-          <option value="Done" ${obj.status === 'Done' ? 'selected' : ''}>Done</option>
+          <option value="Blocked" ${obj.status === 'Blocked' ? 'selected' : ''}>Blocked</option>
         </select>
       </div>
       <button type="submit" class="btn btn-primary">
-        ${obj.firebaseKey ? 'Update' : 'Submit'} Todo
+        ${obj.firebaseKey ? 'Update' : 'Submit'}
       </button>
     </form>
   `;
+
   document.querySelector('#form-container').innerHTML = domString;
 
   // Form Submit Handler
   document.querySelector(`#${obj.firebaseKey ? `update-todo--${obj.firebaseKey}` : 'submit-todo'}`).addEventListener('submit', (e) => {
     e.preventDefault();
-    const formContainer = document.querySelector('#form-container');
+
     const todoObj = {
       title: document.querySelector('#title').value,
       description: document.querySelector('#description').value,
@@ -52,14 +55,14 @@ const TodoForm = (user, obj = {}) => {
     if (obj.firebaseKey) {
       updateTodo({ ...todoObj, firebaseKey: obj.firebaseKey })
         .then(() => {
-          formContainer.classList.remove('active');
-          formContainer.innerHTML = '';
+          document.querySelector('#form-container').classList.remove('active');
+          document.querySelector('#form-container').innerHTML = '';
           TodoList(user);
         });
     } else {
       createTodo(todoObj).then(() => {
-        formContainer.classList.remove('active');
-        formContainer.innerHTML = '';
+        document.querySelector('#form-container').classList.remove('active');
+        document.querySelector('#form-container').innerHTML = '';
         TodoList(user);
       });
     }

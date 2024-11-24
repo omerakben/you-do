@@ -12,6 +12,10 @@ const TodoCard = (todoObj) => {
       Done: {
         text: 'text-success',
         border: 'border-success'
+      },
+      Blocked: {
+        text: 'text-danger',
+        border: 'border-danger'
       }
     };
     return classes[status] || { text: 'text-primary', border: 'border-primary' };
@@ -19,23 +23,25 @@ const TodoCard = (todoObj) => {
 
   const getPriorityIndicator = (priority) => {
     const indicators = {
+      critical: {
+        icon: '<img src="/images/svg/critical.svg" class="priority-icon critical" alt="Critical Priority" />',
+        class: 'priority-critical'
+      },
       high: {
-        icon: `<div class="priority-indicator">
-                <div class="priority-arrow">🔺</div>
-                <div class="priority-arrow">🔺</div>
-                <div class="priority-arrow">🔺</div>
-              </div>`,
+        icon: '<img src="/images/svg/high.svg" class="priority-icon high" alt="High Priority" />',
+        class: 'priority-high'
       },
       medium: {
-        icon: `<div class="priority-indicator">
-                <div class="priority-arrow">🔺</div>
-                <div class="priority-arrow">🔺</div>
-              </div>`,
+        icon: '<img src="/images/svg/medium.svg" class="priority-icon medium" alt="Medium Priority" />',
+        class: 'priority-medium'
       },
       low: {
-        icon: `<div class="priority-indicator">
-                <div class="priority-arrow">🔺</div>
-              </div>`,
+        icon: '<img src="/images/svg/low.svg" class="priority-icon low" alt="Low Priority" />',
+        class: 'priority-low'
+      },
+      trivial: {
+        icon: '<img src="/images/svg/trivial.svg" class="priority-icon trivial" alt="Trivial Priority" />',
+        class: 'priority-trivial'
       }
     };
     return indicators[priority] || indicators.low;
@@ -53,16 +59,14 @@ const TodoCard = (todoObj) => {
               <h5 class="card-title text-truncate mb-0 flex-grow-1">
                 ${todoObj.title}
               </h5>
-              <div class="priority-wrapper ms-2">
+              <div class="priority-wrapper ms-2 ${priorityIndicator.class}">
                 ${priorityIndicator.icon}
               </div>
             </div>
           </div>
-          
           <div class="card-description flex-grow-1 mb-3">
             <p class="card-text">${todoObj.description}</p>
           </div>
-
           <div class="card-actions mt-auto">
             <div class="d-flex flex-column flex-md-row align-items-stretch align-items-md-center justify-content-between gap-2">
               <select 
@@ -71,13 +75,20 @@ const TodoCard = (todoObj) => {
                 data-status-select
               >
                 <option value="Ready to Start" ${todoObj.status === 'Ready to Start' ? 'selected' : ''}>
-                  🔵 Ready to Start
+                  <img src="/images/svg/ready.svg" class="status-icon" alt="Ready to Start" width="16" height="16" />
+                  Ready to Start
                 </option>
                 <option value="In Progress" ${todoObj.status === 'In Progress' ? 'selected' : ''}>
-                  🟡 In Progress
+                  <img src="/images/svg/inProgress.svg" class="status-icon" alt="In Progress" width="16" height="16" />
+                  In Progress
+                </option>
+                <option value="Blocked" ${todoObj.status === 'Blocked' ? 'selected' : ''}>
+                  <img src="/images/svg/blocked.svg" class="status-icon" alt="Blocked" width="16" height="16" />
+                  Blocked
                 </option>
                 <option value="Done" ${todoObj.status === 'Done' ? 'selected' : ''}>
-                  🟢 Done
+                  <img src="/images/svg/done.svg" class="status-icon" alt="Done" width="16" height="16" />
+                  Done
                 </option>
               </select>
               <div class="d-flex gap-2 justify-content-center">
@@ -94,6 +105,7 @@ const TodoCard = (todoObj) => {
       </div>
     </div>
   `;
+
   return domString;
 };
 
