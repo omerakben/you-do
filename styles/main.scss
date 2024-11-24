@@ -7,7 +7,7 @@ $color-navy: #1E6091;
 $color-form: #9cadce;
 
 // Status Colors
-$status-ready: #0d6efd;
+$status-readyToStart: #0d6efd;
 $status-progress: #ab8000;
 $status-done: #198754;
 $status-blocked: #f90000;
@@ -83,7 +83,7 @@ body {
 
     &:focus {
       box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
-      border-color: $status-ready;
+      border-color: $status-readyToStart;
     }
   }
 
