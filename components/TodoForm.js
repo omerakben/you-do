@@ -25,7 +25,7 @@ const TodoForm = (user, obj = {}) => {
       <div class="form-group mb-3">
         <label for="status" class="form-label">Status</label>
         <select class="form-control" id="status" required>
-          <option value="Ready" ${obj.status === 'Ready' ? 'selected' : ''}>Ready</option>
+          <option value="ReadyToStart" ${obj.status === 'ReadyToStart' ? 'selected' : ''}>Ready To Start</option>
           <option value="InProgress" ${obj.status === 'InProgress' ? 'selected' : ''}>In Progress</option>
           <option value="Blocked" ${obj.status === 'Blocked' ? 'selected' : ''}>Blocked</option>
         </select>

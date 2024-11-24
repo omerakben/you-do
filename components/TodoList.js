@@ -26,7 +26,7 @@ const TodoList = async (user, filter = null, searchTerm = '') => {
     }
 
     // Apply status filter
-    if (filter === 'Ready' || filter === 'InProgress' || filter === 'Done' || filter === 'Blocked') {
+    if (filter === 'ReadyToStart' || filter === 'InProgress' || filter === 'Done' || filter === 'Blocked') {
       filteredTodos = filteredTodos.filter((todo) => todo.status === filter);
     }
 
@@ -39,10 +39,10 @@ const TodoList = async (user, filter = null, searchTerm = '') => {
       trivial: 4
     };
 
-    // Status order: In Progress → Ready → Blocked → Done
+    // Status order: In Progress → ReadyToStart → Blocked → Done
     const statusOrder = {
       InProgress: 0,
-      Ready: 1,
+      ReadyToStart: 1,
       Blocked: 2,
       Done: 3
     };

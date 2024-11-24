@@ -42,7 +42,7 @@ const priorityOrder = {
 // Status order: In Progress → Ready → Blocked → Done
 const statusOrder = {
   InProgress: 0,
-  Ready: 1,
+  ReadyToStart: 1,
   Blocked: 2,
   Done: 3
 };
