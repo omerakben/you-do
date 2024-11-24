@@ -144,4 +144,4 @@ npm start
 
 Omer (Ozzy) Akben - [e-mail me](mailto:akbenof@gmail.com)
 
-Project Link: [https://github.com/yourusername/todo-app](https://github.com/omerakben/you-do)
+Project Link: [Github](https://github.com/omerakben/you-do)
