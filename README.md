@@ -120,17 +120,17 @@ npm start
 
 ### Creating a Todo
 1. Click "+ Add Todo" button
-2. Fill in title and description
+2. Fill in the title and description
 3. Select priority level
 4. Choose initial status
 5. Submit form
 
 ### Managing Todos
 - **Change Status**: Use dropdown in todo card
-- **Edit Todo**: Click edit button and modify in form
+- **Edit Todo**: Click the edit button and modify the form
 - **Delete Todo**: Click delete button with confirmation
 - **Filter Todos**: Use navbar status buttons
-- **Search**: Type in search bar for real-time filtering
+- **Search**: Type in the search bar for real-time filtering
 
 ## Contributing
 
@@ -142,6 +142,8 @@ npm start
 
 ## Contact
 
-Omer (Ozzy) Akben - [e-mail me](mailto:akbenof@gmail.com)
+Omer (Ozzy) Akben - [E-Mail](mailto:akbenof@gmail.com)
 
-Project Link: [Github](https://github.com/omerakben/you-do)
+Project Link: [GitHub](https://github.com/omerakben/you-do)
+
+Deployed URL: [Netlify](https://todo-e29.netlify.app/)
