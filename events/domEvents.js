@@ -16,22 +16,42 @@ const domEvents = (user) => {
 
     // Edit Todo
     if (e.target.dataset.editId) {
+      const formContainer = document.querySelector('#form-container');
+      formContainer.classList.add('active');
+
       getSingleTodo(e.target.dataset.editId).then((todoObj) => {
         TodoForm(user, todoObj);
+        // Scroll to top of the page
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       });
     }
+  });
 
-    // Toggle Complete
-    if (e.target.dataset.todoId) {
-      getSingleTodo(e.target.dataset.todoId).then((todoObj) => {
-        updateTodo({ ...todoObj, completed: !todoObj.completed })
+  // Handle status change
+  document.querySelector('#app').addEventListener('change', (e) => {
+    if (e.target.hasAttribute('data-status-select')) {
+      const { todoId } = e.target.dataset;
+      const { value: newStatus } = e.target;
+
+      getSingleTodo(todoId).then((todoObj) => {
+        updateTodo({ ...todoObj, status: newStatus })
           .then(() => TodoList(user));
       });
     }
+  });
 
-    // Add New Todo Button
+  // Add New Todo Button
+  document.querySelector('#app').addEventListener('click', (e) => {
     if (e.target.id === 'add-todo-btn') {
-      TodoForm(user);
+      const formContainer = document.querySelector('#form-container');
+      formContainer.classList.toggle('active');
+
+      if (formContainer.classList.contains('active')) {
+        TodoForm(user);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        formContainer.innerHTML = '';
+      }
     }
   });
 };
