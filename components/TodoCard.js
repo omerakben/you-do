@@ -64,7 +64,7 @@ const TodoCard = (todoObj) => {
           </div>
 
           <div class="card-actions mt-auto">
-            <div class="d-flex align-items-center justify-content-between gap-2">
+            <div class="d-flex flex-column flex-md-row align-items-stretch align-items-md-center justify-content-between gap-2">
               <select 
                 class="form-select form-select-sm status-select ${statusClasses.text}"
                 data-todo-id="${todoObj.firebaseKey}"
@@ -80,12 +80,14 @@ const TodoCard = (todoObj) => {
                   🟢 Done
                 </option>
               </select>
-              <button class="btn btn-link text-success-emphasis p-0" data-edit-id="${todoObj.firebaseKey}">
-                <i class="fas fa-edit"></i> Edit
-              </button>
-              <button class="btn btn-link text-danger p-0" data-delete-id="${todoObj.firebaseKey}">
-                <i class="fas fa-trash-alt"></i> Delete
-              </button>
+              <div class="d-flex gap-2 justify-content-center">
+                <button class="btn btn-link text-success-emphasis p-2" data-edit-id="${todoObj.firebaseKey}">
+                  <i class="fas fa-edit"></i> Edit
+                </button>
+                <button class="btn btn-link text-danger p-2" data-delete-id="${todoObj.firebaseKey}">
+                  <i class="fas fa-trash-alt"></i> Delete
+                </button>
+              </div>
             </div>
           </div>
         </div>
