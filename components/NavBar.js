@@ -35,14 +35,14 @@ const NavBar = (user) => {
             <button class="btn btn-outline-light d-flex align-items-center gap-2" data-status="Ready">
               <img src="/images/svg/ready.svg" class="status-icon" alt="Ready" width="16" height="16" />
               Ready
-            <button class="btn btn-outline-light d-flex align-items-center gap-2" data-status="Done">
-              <img src="/images/svg/done.svg" class="status-icon" alt="Done" width="16" height="16" />
-              Done
-            </button>
-            <button class="btn btn-outline-light d-flex align-items-center gap-2" data-status="Blocked">
+              <button class="btn btn-outline-light d-flex align-items-center gap-2" data-status="Blocked">
               <img src="/images/svg/blocked.svg" class="status-icon" alt="Blocked Status" width="16" height="16" />
               Blocked
-            </button>
+              </button>
+              <button class="btn btn-outline-light d-flex align-items-center gap-2" data-status="Done">
+                <img src="/images/svg/done.svg" class="status-icon" alt="Done" width="16" height="16" />
+                Done
+              </button>
           </div>
 
           <!-- Add Todo Button -->

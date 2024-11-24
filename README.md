@@ -9,7 +9,7 @@ A dynamic, responsive Todo management application built with vanilla JavaScript 
 - **Update Tasks**: Edit existing todos with real-time updates
 - **Delete Tasks**: Remove todos with confirmation dialog
 - **Priority Levels**: 
-  - Critical 
+  - Critical
   - High
   - Medium
   - Low
@@ -26,6 +26,25 @@ A dynamic, responsive Todo management application built with vanilla JavaScript 
 - Search functionality across titles and descriptions
 - Automatic sorting by priority level
 - Visual status indicators with color-coded borders
+
+```javascript
+// Priority order: critical → high → medium → low → trivial
+const priorityOrder = {
+  critical: 0,
+  high: 1,
+  medium: 2,
+  low: 3,
+  trivial: 4
+};
+
+// Status order: In Progress → Ready → Blocked → Done
+const statusOrder = {
+  InProgress: 0,
+  Ready: 1,
+  Blocked: 2,
+  Done: 3
+};
+```
 
 ### User Interface
 - Clean, modern design with smooth animations
@@ -147,11 +166,10 @@ npm start
 
 Omer (Ozzy) Akben - [E-Mail](mailto:akbenof@gmail.com)
 
+## Links:
 
 Project Link: [Github](https://github.com/omerakben/you-do)
 
 SVG Link : [SVG](https://www.svgrepo.com/collection/wolf-kit-rounded-line-icons/)
-
-Project Link: [GitHub](https://github.com/omerakben/you-do)
 
 Deployed URL: [Netlify](https://todo-e29.netlify.app/)
