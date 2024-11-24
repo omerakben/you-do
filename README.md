@@ -142,6 +142,6 @@ npm start
 
 ## Contact
 
-Omer (Ozzy) Akben - [your-email@example.com](mailto:akbenof@gmail.com)
+Omer (Ozzy) Akben - [e-mail me](mailto:akbenof@gmail.com)
 
 Project Link: [https://github.com/yourusername/todo-app](https://github.com/omerakben/you-do)
