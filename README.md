@@ -13,11 +13,6 @@ A dynamic, responsive Todo management application built with vanilla JavaScript 
   - Medium (🔺🔺)
   - Low (🔺)
 
-### Status Tracking
-- **Ready to Start** (🔵): Initial state for new tasks
-- **In Progress** (🟡): Tasks currently being worked on
-- **Done** (🟢): Completed tasks
-
 ### Filtering & Organization
 - Filter todos by status
 - Search functionality across titles and descriptions

@@ -1,11 +1,11 @@
 const TodoCard = (todoObj) => {
   const getStatusClass = (status) => {
     const classes = {
-      'Ready to Start': {
+      Ready: {
         text: 'text-primary',
         border: 'border-primary'
       },
-      'In Progress': {
+      InProgress: {
         text: 'text-warning',
         border: 'border-warning'
       },
@@ -74,12 +74,12 @@ const TodoCard = (todoObj) => {
                 data-todo-id="${todoObj.firebaseKey}"
                 data-status-select
               >
-                <option value="Ready to Start" ${todoObj.status === 'Ready to Start' ? 'selected' : ''}>
-                  <img src="/images/svg/ready.svg" class="status-icon" alt="Ready to Start" width="16" height="16" />
-                  Ready to Start
+                <option value="Ready" ${todoObj.status === 'Ready' ? 'selected' : ''}>
+                  <img src="/images/svg/ready.svg" class="status-icon" alt="Ready" width="16" height="16" />
+                  Ready
                 </option>
-                <option value="In Progress" ${todoObj.status === 'In Progress' ? 'selected' : ''}>
-                  <img src="/images/svg/inProgress.svg" class="status-icon" alt="In Progress" width="16" height="16" />
+                <option value="InProgress" ${todoObj.status === 'InProgress' ? 'selected' : ''}>
+                  <img src="/images/svg/inProgress.svg" class="status-icon" alt="InProgress" width="16" height="16" />
                   In Progress
                 </option>
                 <option value="Blocked" ${todoObj.status === 'Blocked' ? 'selected' : ''}>
