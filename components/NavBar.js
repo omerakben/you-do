@@ -28,12 +28,12 @@ const NavBar = (user) => {
             <button class="btn btn-outline-light d-flex align-items-center gap-2" id="all-todos">
               <i class="fas fa-list"></i> All To-Dos
             </button>
-            <button class="btn btn-outline-light d-flex align-items-center gap-2" data-status="In Progress">
-              <img src="/images/svg/inProgress.svg" class="status-icon" alt="In Progress" width="16" height="16" />
+            <button class="btn btn-outline-light d-flex align-items-center gap-2" data-status="InProgress">
+              <img src="/images/svg/inProgress.svg" class="status-icon" alt="InProgress" width="16" height="16" />
               In Progress
             </button>
-            <button class="btn btn-outline-light d-flex align-items-center gap-2" data-status="Ready to Start">
-              <img src="/images/svg/ready.svg" class="status-icon" alt="Ready to Start" width="16" height="16" />
+            <button class="btn btn-outline-light d-flex align-items-center gap-2" data-status="Ready">
+              <img src="/images/svg/ready.svg" class="status-icon" alt="Ready" width="16" height="16" />
               Ready
             <button class="btn btn-outline-light d-flex align-items-center gap-2" data-status="Done">
               <img src="/images/svg/done.svg" class="status-icon" alt="Done" width="16" height="16" />
