@@ -11,12 +11,25 @@ $status-ready: #0d6efd;
 $status-progress: #ffc107; 
 $status-done: #198754;     
 
+// Add these media query mixins at the top
+@mixin mobile {
+  @media (max-width: 767px) { @content; }
+}
+
+@mixin tablet {
+  @media (min-width: 768px) and (max-width: 1023px) { @content; }
+}
+
 body {
   background: linear-gradient(135deg, $color-dark, $color-navy);
   color: white;
   text-align: center;
-  margin-top: 100px;
+  margin-top: 80px;
   min-height: 100vh;
+  
+  @include mobile {
+    margin-top: 60px;
+  }
 }
 
 #form-container {
@@ -33,6 +46,11 @@ body {
     padding: 20px;
     transform: translateY(0);
     opacity: 1;
+  }
+  
+  @include mobile {
+    max-width: 100%;
+    padding: 0 15px;
   }
 }
 
@@ -65,6 +83,15 @@ body {
     transition: all 0.3s ease;
     &:hover {
       transform: translateY(-1px);
+    }
+  }
+
+  @include mobile {
+    padding: 15px;
+    
+    .btn {
+      width: 100%;
+      margin-top: 10px;
     }
   }
 }
@@ -105,6 +132,28 @@ body {
       &[data-status="In Progress"].active { color: $status-progress !important; }
       &[data-status="Done"].active { color: $status-done !important; }
       &[data-filter="all"].active { color: $color-dark !important; }
+    }
+  }
+
+  @include mobile {
+    padding: 8px;
+    
+    .search-form {
+      width: 100%;
+      margin: 8px 0;
+    }
+    
+    .btn-group {
+      width: 100%;
+      overflow-x: auto;
+      flex-wrap: nowrap;
+      padding-bottom: 5px;
+      
+      .btn {
+        flex: 0 0 auto;
+        font-size: 0.875rem;
+        padding: 4px 8px;
+      }
     }
   }
 }
@@ -192,6 +241,42 @@ body {
       }
     }
   }
+
+  @include mobile {
+    margin: 0 10px;
+    
+    .card-body {
+      padding: 1rem;
+    }
+    
+    .card-actions {
+      padding: 0.75rem;
+      flex-direction: column;
+      gap: 10px;
+      
+      .status-select {
+        width: 100%;
+      }
+      
+      .btn-group {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+  }
+  
+  // Optimize touch targets
+  .btn-link {
+    @include mobile {
+      padding: 8px;
+      margin: 2px;
+      
+      i {
+        font-size: 1.1rem;
+      }
+    }
+  }
 }
 
 .priority-indicator {
@@ -243,11 +328,58 @@ body {
 
 .todo-container {
   padding-bottom: 50px;
+  
+  @include mobile {
+    padding: 10px;
+  }
 }
 
 // Border styles
 .border-primary, .border-warning, .border-success {
   border-width: 5px !important;
   border-style: solid !important;
+}
+
+// Add touch-specific optimizations
+@media (hover: none) {
+  .card:hover {
+    transform: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  }
+  
+  .btn:hover {
+    transform: none !important;
+  }
+  
+  .form-control:focus {
+    transform: none !important;
+  }
+}
+
+// Update row layout for mobile
+#todo-cards.row {
+  @include mobile {
+    margin: 0;
+    row-gap: 1rem !important;
+  }
+}
+
+// Add responsive typography
+h2 {
+  @include mobile {
+    font-size: 1.5rem;
+  }
+}
+
+.card-title {
+  @include mobile {
+    font-size: 1rem;
+  }
+}
+
+.card-text {
+  @include mobile {
+    font-size: 0.9rem;
+  }
 }
 

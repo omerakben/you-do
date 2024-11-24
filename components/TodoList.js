@@ -5,10 +5,10 @@ import renderToDOM from '../utils/renderToDom';
 const TodoList = async (user) => {
   const domString = `
     <div class="todo-container">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2>My Todo List</h2>
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-3">
+        <h2 class="mb-3 mb-md-0">My Todo List</h2>
       </div>
-      <div id="todo-cards" class="row row-cols-1 row-cols-md-3 g-4"></div>
+      <div id="todo-cards" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4"></div>
     </div>
   `;
 
