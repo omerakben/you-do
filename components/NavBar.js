@@ -25,14 +25,28 @@ const NavBar = (user) => {
 
           <!-- Filter Buttons -->
           <div class="btn-group mx-2" role="group">
-            <button class="btn btn-outline-light" data-filter="all">All</button>
-            <button class="btn btn-outline-light" data-status="Ready to Start">🔵 Ready</button>
-            <button class="btn btn-outline-light" data-status="In Progress">🟡 In Progress</button>
-            <button class="btn btn-outline-light" data-status="Done">🟢 Done</button>
+            <button class="btn btn-outline-light d-flex align-items-center gap-2" id="all-todos">
+              <i class="fas fa-list"></i> All To-Dos
+            </button>
+            <button class="btn btn-outline-light d-flex align-items-center gap-2" data-status="In Progress">
+              <img src="/images/svg/inProgress.svg" class="status-icon" alt="In Progress" width="16" height="16" />
+              In Progress
+            </button>
+            <button class="btn btn-outline-light d-flex align-items-center gap-2" data-status="Ready to Start">
+              <img src="/images/svg/ready.svg" class="status-icon" alt="Ready to Start" width="16" height="16" />
+              Ready
+            <button class="btn btn-outline-light d-flex align-items-center gap-2" data-status="Done">
+              <img src="/images/svg/done.svg" class="status-icon" alt="Done" width="16" height="16" />
+              Done
+            </button>
+            <button class="btn btn-outline-light d-flex align-items-center gap-2" data-status="Blocked">
+              <img src="/images/svg/blocked.svg" class="status-icon" alt="Blocked Status" width="16" height="16" />
+              Blocked
+            </button>
           </div>
 
           <!-- Add Todo Button -->
-          <button class="btn btn-success me-2" id="add-todo-btn">
+          <button class="btn btn-success me-2" id="create-todo">
             <i class="fas fa-plus"></i> Add Todo
           </button>
 
