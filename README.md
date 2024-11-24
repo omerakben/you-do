@@ -9,9 +9,17 @@ A dynamic, responsive Todo management application built with vanilla JavaScript 
 - **Update Tasks**: Edit existing todos with real-time updates
 - **Delete Tasks**: Remove todos with confirmation dialog
 - **Priority Levels**: 
-  - High (🔺🔺🔺)
-  - Medium (🔺🔺)
-  - Low (🔺)
+  - Critical 
+  - High
+  - Medium
+  - Low
+  - Trivial
+
+- **Status**: 
+  - Ready 
+  - In Progress
+  - Blocked
+  - Done
 
 ### Filtering & Organization
 - Filter todos by status
