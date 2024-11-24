@@ -90,7 +90,7 @@ A dynamic, responsive Todo management application built with vanilla JavaScript 
 
 1. Clone the repository
 ```bash
-git clone [repository-url]
+git clone https://github.com/omerakben/you-do.git
 ```
 
 2. Install dependencies
