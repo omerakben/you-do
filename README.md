@@ -2,7 +2,7 @@
 
 A dynamic, responsive Todo management application built with vanilla JavaScript and Firebase, featuring real-time updates, priority management, and status tracking.
 
-![Screenshot](public\images\screenshots\main.png)
+![Screenshot](public/images/screenshots/main.png)
 
 ## Features
 
