@@ -51,12 +51,12 @@ const TodoCard = (todoObj) => {
   const priorityIndicator = getPriorityIndicator(todoObj.priority);
 
   const domString = `
-    <div class="col">
+    <div class="col-12 col-lg-4 col-md-6">
       <div class="card h-100 shadow-sm border-4 ${statusClasses.border}">
-        <div class="card-body d-flex flex-column">
+        <div class="card-body d-flex flex-column" style="min-height: 250px;">
           <div class="card-header-section mb-3">
             <div class="d-flex justify-content-between align-items-start">
-              <h5 class="card-title text-truncate mb-0 flex-grow-1">
+              <h5 class="card-title text-truncate mb-0 flex-grow-1 pe-2">
                 ${todoObj.title}
               </h5>
               <div class="priority-wrapper ms-2 ${priorityIndicator.class}">
@@ -64,38 +64,36 @@ const TodoCard = (todoObj) => {
               </div>
             </div>
           </div>
-          <div class="card-description flex-grow-1 mb-3">
-            <p class="card-text">${todoObj.description}</p>
+          <div class="card-description flex-grow-1 mb-4" style="min-height: 100px; overflow-y: auto;">
+            <p class="card-text text-start" style="white-space: pre-line;">
+              ${todoObj.description}
+            </p>
           </div>
           <div class="card-actions mt-auto">
-            <div class="d-flex flex-column flex-md-row align-items-stretch align-items-md-center justify-content-between gap-2">
+            <div class="d-flex flex-column gap-2">
               <select 
-                class="form-select form-select-sm status-select ${statusClasses.text}"
+                class="form-select status-select ${statusClasses.text}"
                 data-todo-id="${todoObj.firebaseKey}"
                 data-status-select
               >
-                <option value="ReadyToStart" ${todoObj.status === 'ReadyToStart' ? 'selected' : ''}>
-                  <img src="/images/svg/ready.svg" class="status-icon" alt="ReadyToStart" width="16" height="16" />
-                  Ready To Start
-                </option>
-                <option value="InProgress" ${todoObj.status === 'InProgress' ? 'selected' : ''}>
-                  <img src="/images/svg/inProgress.svg" class="status-icon" alt="InProgress" width="16" height="16" />
-                  In Progress
-                </option>
-                <option value="Blocked" ${todoObj.status === 'Blocked' ? 'selected' : ''}>
-                  <img src="/images/svg/blocked.svg" class="status-icon" alt="Blocked" width="16" height="16" />
-                  Blocked
-                </option>
-                <option value="Done" ${todoObj.status === 'Done' ? 'selected' : ''}>
-                  <img src="/images/svg/done.svg" class="status-icon" alt="Done" width="16" height="16" />
-                  Done
-                </option>
+                <option value="ReadyToStart" ${todoObj.status === 'ReadyToStart' ? 'selected' : ''}>Ready To Start</option>
+                <option value="InProgress" ${todoObj.status === 'InProgress' ? 'selected' : ''}>In Progress</option>
+                <option value="Blocked" ${todoObj.status === 'Blocked' ? 'selected' : ''}>Blocked</option>
+                <option value="Done" ${todoObj.status === 'Done' ? 'selected' : ''}>Done</option>
               </select>
-              <div class="d-flex gap-2 justify-content-center">
-                <button class="btn btn-link text-success-emphasis p-2" data-edit-id="${todoObj.firebaseKey}">
+              <div class="d-flex justify-content-between">
+                <button 
+                  class="btn btn-link text-success-emphasis p-2" 
+                  data-edit-id="${todoObj.firebaseKey}"
+                  type="button"
+                >
                   <i class="fas fa-edit"></i> Edit
                 </button>
-                <button class="btn btn-link text-danger p-2" data-delete-id="${todoObj.firebaseKey}">
+                <button 
+                  class="btn btn-link text-danger p-2" 
+                  data-delete-id="${todoObj.firebaseKey}"
+                  type="button"
+                >
                   <i class="fas fa-trash-alt"></i> Delete
                 </button>
               </div>

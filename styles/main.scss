@@ -1,9 +1,15 @@
 @use "~bootstrap/scss/bootstrap";
 
-// Essential Color Variables
+// Core Colors
 $color-dark: #181b34;
 $color-navy: #1E6091;
 $color-form: #9cadce;
+$color-white: #ffffff;
+$color-text: #333333;
+
+// Add darker variants
+$color-dark-darker: #13162a; // Manually darkened by 3%
+$color-navy-darker: #184d74; // Manually darkened by 3%
 
 // Status Colors
 $status-readyToStart: #0d6efd;
@@ -12,37 +18,28 @@ $status-done: #198754;
 $status-blocked: #f90000;
 
 // Priority Colors
-$priority-blocked: #FFE2E2;
-$priority-critical: #FFE7E7;
-$priority-high: #FFF0F0;
-$priority-medium: #F0F5E8;
-$priority-low: #E3E7F5;
-$priority-trivial: #F6F9F2;
+$priority-blocked: #f0897bfc;
+$priority-critical: #f9c8c8;
+$priority-high: #f0afaf;
+$priority-medium: #e5f4cd;
+$priority-low: #c2ccf0;
+$priority-trivial: #f9e2f9;
 
-@mixin mobile {
-  @media (max-width: 767px) { @content; }
-}
-
-@mixin tablet {
-  @media (min-width: 768px) and (max-width: 1023px) { @content; }
-}
-
+// Layout
 body {
   background: linear-gradient(135deg, $color-dark, $color-navy);
-  color: white;
+  color: $color-white;
   text-align: center;
-  margin-top: 80px;
+  margin-top: 90px;
   min-height: 100vh;
-
-  @include mobile {
-    margin-top: 60px;
-  }
 }
 
+// Form Container
 #form-container {
   max-width: 600px;
   margin: 0 auto;
-  transition: all 0.4s ease-in-out;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
   height: 0;
   transform: translateY(-20px);
@@ -54,119 +51,235 @@ body {
     transform: translateY(0);
     opacity: 1;
   }
-
-  @include mobile {
-    max-width: 100%;
-    padding: 0 15px;
-  }
 }
 
+// Todo Form
 .todo-form {
   background: $color-form;
-  padding: 20px;
+  padding: 25px;
   border-radius: 12px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  color: #333;
-  transform: translateY(0);
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
-  }
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  color: $color-text;
+  transition: transform 0.3s ease;
 
   .form-control, .form-select {
     border-radius: 8px;
     border: 2px solid transparent;
-    transition: all 0.3s ease;
+    transition: border-color 0.2s ease;
+    padding: 10px;
+    margin-bottom: 15px;
 
     &:focus {
-      box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+      box-shadow: 0 0 0 3px rgba($status-readyToStart, 0.15);
       border-color: $status-readyToStart;
     }
   }
 
   .btn {
-    transition: all 0.3s ease;
+    padding: 10px 20px;
+    font-weight: 500;
+    transition: transform 0.2s ease;
+    
     &:hover {
-      transform: translateY(-1px);
-    }
-  }
-
-  @include mobile {
-    padding: 15px;
-    .btn {
-      width: 100%;
-      margin-top: 10px;
+      transform: translateY(-2px);
     }
   }
 }
 
+// Navbar Styling
 .navbar {
   background: rgba($color-dark, 0.95) !important;
   backdrop-filter: blur(10px);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 15px 0;
+  transition: all 0.3s ease;
+  z-index: 1030;
+  height: 70px;
+  display: flex;
+  align-items: center;
 
-  .search-form {
-    max-width: 500px;
-    input {
-      transition: all 0.3s ease;
+  .container-fluid {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .navbar-brand {
+    font-size: 1.3rem;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    
+    i {
+      font-size: 1.3rem;
+    }
+  }
+
+  // Mobile styles
+  @media (max-width: 1399px) {
+    .navbar-collapse {
+      position: fixed;
+      top: 70px;
+      left: 0;
+      bottom: 0;
+      width: 280px;
+      padding: 1.5rem;
+      background: linear-gradient(135deg, $color-dark-darker, $color-navy-darker) !important;
+      height: calc(100vh - 70px) !important;
+      overflow-y: auto;
+      z-index: 1020;
+      transform: translateX(-100%);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                  visibility 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      visibility: hidden;
+      will-change: transform;
+      box-shadow: -8px 0 16px rgba(0, 0, 0, 0.1);
+      
+      &.show {
+        transform: translateX(0);
+        visibility: visible;
+
+        & + .navbar-backdrop {
+          opacity: 1;
+          pointer-events: auto;
+        }
+      }
+
+      // Scrollbar styling
+      &::-webkit-scrollbar {
+        width: 6px;
+        &-track { background: rgba($color-white, 0.05); }
+        &-thumb {
+          background: rgba($color-white, 0.2);
+          border-radius: 3px;
+          &:hover { background: rgba($color-white, 0.3); }
+        }
+      }
+
+      // Mobile button group styling
+      .btn-group {
+        width: 100%;
+        gap: 0.5rem;
+        padding-top: 2rem;
+        margin-top: 1rem;
+        
+        .btn {
+          width: 100%;
+          text-align: left;
+          padding: 12px 16px;
+          border-radius: 8px !important;
+          background: rgba($color-white, 0.05);
+          border-color: rgba($color-white, 0.1);
+          margin: 0 !important;
+          
+          &:hover {
+            background: rgba($color-white, 0.08) !important;
+            border-color: rgba($color-white, 0.15);
+          }
+          
+          &:active {
+            transform: scale(0.98);
+          }
+
+          img, i {
+            width: 18px;
+            height: 18px;
+            margin-right: 8px;
+          }
+        }
+      }
+
+      #create-todo {
+        width: 100%;
+        margin: 1rem 0 !important;
+      }
+
+      #google-auth {
+        width: 100%;
+        margin-top: 1.5rem !important;
+      }
+    }
+
+    // Backdrop
+    .navbar-backdrop {
+      position: fixed;
+      top: 70px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(3px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 1019;
+    }
+
+    // Mobile specific adjustments
+    .navbar-toggler {
+      padding: 8px 12px;
+      margin-left: 12px;
+      
       &:focus {
-        transform: scale(1.02);
+        box-shadow: none;
       }
     }
-  }
 
-  .btn-group {
     .btn {
-      transition: all 0.3s ease;
-      border: 1px solid rgba(255, 255, 255, 0.5);
-
-      &:hover {
-        background-color: rgba(255, 255, 255, 0.1) !important;
-        border-color: rgba(255, 255, 255, 0.8);
-      }
-
-      &.active {
-        background-color: rgba(255, 255, 255, 0.15) !important;
-        border-color: rgba(255, 255, 255, 0.9);
-      }
+      min-height: 44px;
     }
   }
 
-  @include mobile {
-    padding: 8px;
-    .search-form {
-      width: 100%;
-      margin: 8px 0;
-    }
-    .btn-group {
-      width: 100%;
-      overflow-x: auto;
-      flex-wrap: nowrap;
-      padding-bottom: 5px;
-      .btn {
-        flex: 0 0 auto;
-        font-size: 0.875rem;
-        padding: 4px 8px;
+  // Desktop styles
+  @media (min-width: 1400px) {
+    .navbar-collapse {
+      transform: none !important;
+      visibility: visible !important;
+      transition: none !important;
+      height: auto !important;
+      
+      .navbar-nav {
+        align-items: center !important;
+      }
+
+      // Center the filter buttons with more spacing
+      .btn-group {
+        margin: 1rem auto;
+        padding-top: 0.5rem;
+        
+        .btn {
+          padding: 8px 16px;
+          border-color: rgba($color-white, 0.2);
+          
+          &:hover {
+            background: rgba($color-white, 0.08) !important;
+            border-color: rgba($color-white, 0.3);
+          }
+          
+          &:not(:last-child) { 
+            margin-right: 4px; 
+          }
+        }
+      }
+
+      // Position Add To-Do button
+      #create-todo {
+        margin-left: auto; // Push to the end
       }
     }
   }
 }
 
-// Status Icon Styling
+// Status Icons
 .status-icon {
   filter: invert(1);
   transition: transform 0.2s ease;
   width: 16px;
   height: 16px;
-
-  .btn:hover & {
-    transform: scale(1.1);
-  }
 }
 
-// Priority Icons Styling
+// Priority Icons
 .priority-icon {
   width: 24px;
   height: 24px;
@@ -174,6 +287,7 @@ body {
   display: block;
 }
 
+// Priority Wrapper
 .priority-wrapper {
   display: flex;
   align-items: center;
@@ -198,71 +312,367 @@ select#priority, select#status {
     align-items: center;
     gap: 8px;
     padding: 8px;
-    
-    .priority-wrapper {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 24px;
-      height: 24px;
-      border-radius: 4px;
-      margin-right: 8px;
-    }
-    
-    .priority-icon {
-      width: 16px;
-      height: 16px;
-      object-fit: contain;
-    }
-    
-    .status-icon {
-      width: 16px;
-      height: 16px;
-      margin-right: 8px;
-      vertical-align: middle;
-    }
   }
 }
 
-// Mobile Optimizations
-@media (hover: none) {
-  .card:hover {
-    transform: none;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  }
-
-  .btn:hover {
-    transform: none !important;
-  }
-
-  .form-control:focus {
-    transform: none !important;
-  }
-}
-
+// Search Components
 .search-status {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 0.5rem 1rem;
+  background: rgba($color-white, 0.1);
+  padding: 8px 16px;
   border-radius: 4px;
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba($color-white, 0.8);
+  margin: 10px 0;
 }
 
 .search-form {
   input {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: white;
+    background: rgba($color-white, 0.1);
+    border: 1px solid rgba($color-white, 0.2);
+    color: $color-white;
+    padding: 10px;
     
     &::placeholder {
-      color: rgba(255, 255, 255, 0.5);
+      color: rgba($color-white, 0.5);
     }
     
     &:focus {
-      background: rgba(255, 255, 255, 0.15);
-      border-color: rgba(255, 255, 255, 0.3);
-      color: white;
-      box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.1);
+      background: rgba($color-white, 0.15);
+      border-color: rgba($color-white, 0.3);
+      color: $color-white;
+      box-shadow: 0 0 0 0.25rem rgba($color-white, 0.1);
     }
+  }
+}
+
+// Adjust main content when sidebar is open
+@media (max-width: 1399px) {
+  body {
+    &.sidebar-open {
+      #todo-container {
+        transform: translateX(280px);
+        margin-left: 0;
+      }
+    }
+  }
+}
+
+// Overlay for sidebar
+.navbar-collapse.show::before {
+  content: '';
+  position: fixed;
+  top: 70px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: -1;
+  backdrop-filter: blur(3px);
+}
+
+// Smooth transition for content
+#todo-container {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding-top: 1rem;
+  padding-bottom: 60px;
+  margin-bottom: 2rem;
+}
+
+// Header Search Form
+.list-header {
+  .header-search-form {
+    position: relative;
+    min-width: 300px;
+    max-width: 400px;
+
+    input {
+      background: rgba($color-white, 0.1);
+      border: 1px solid rgba($color-white, 0.2);
+      color: $color-white;
+      padding: 10px 35px 10px 15px;
+      border-radius: 20px;
+      width: 100%;
+      
+      &::placeholder {
+        color: rgba($color-white, 0.5);
+      }
+      
+      &:focus {
+        background: rgba($color-white, 0.15);
+        border-color: rgba($color-white, 0.3);
+        color: $color-white;
+        box-shadow: 0 0 0 0.25rem rgba($color-white, 0.1);
+        outline: none;
+      }
+    }
+
+    .clear-search {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 4px 8px;
+      font-size: 0.9rem;
+      opacity: 0.7;
+      transition: opacity 0.2s ease;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  .search-status {
+    font-size: 0.9rem;
+    color: rgba($color-white, 0.7);
+  }
+}
+
+// Remove the search form from navbar
+.navbar {
+  .search-form {
+    display: none;
+  }
+}
+
+.todo-card {
+  margin-bottom: 1rem;
+}
+
+// Update content transition
+#main-container {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+  padding-top: 1.5rem;
+  
+  @media (max-width: 1399px) {
+    .sidebar-open & {
+      transform: translateX(280px);
+    }
+  }
+}
+
+// Add touch handling styles
+@media (max-width: 1399px) {
+  body.sidebar-open {
+    overflow: hidden;
+    touch-action: none;
+    
+    #main-container {
+      pointer-events: none;
+    }
+  }
+}
+
+// Add smooth shadow transition for buttons
+.btn {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+// Improve mobile touch targets
+@media (max-width: 1399px) {
+  .navbar-toggler {
+    padding: 8px 12px;
+    margin-left: 12px;
+    
+    &:focus {
+      box-shadow: none;
+    }
+  }
+  
+  .btn {
+    min-height: 44px;
+  }
+}
+
+// Improve sidebar transition
+@media (max-width: 1399px) {
+  .navbar-collapse {
+    // ... (keep existing styles)
+    box-shadow: -8px 0 16px rgba(0, 0, 0, 0.1);
+    
+    &.show {
+      transform: translateX(0);
+      visibility: visible;
+
+      & + .navbar-backdrop {
+        opacity: 1;
+        pointer-events: auto;
+      }
+    }
+  }
+
+  // Add backdrop for better visual separation
+  .navbar-backdrop {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1019;
+  }
+}
+
+// Improve button spacing in sidebar
+@media (max-width: 1399px) {
+  .btn-group {
+    gap: 0.5rem;
+    
+    .btn {
+      margin: 0 !important;
+      border-radius: 8px !important;
+    }
+  }
+
+  #create-todo {
+    margin: 1rem 0 !important;
+  }
+
+  #google-auth {
+    margin-top: 1.5rem !important;
+  }
+}
+
+// Update the navbar-collapse styles in the mobile section
+@media (max-width: 1399px) {
+  .navbar-collapse {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 280px;
+    height: calc(100vh - 70px);
+    overflow-y: auto;
+    z-index: 1020;
+    background: rgba($color-dark, 0.2);
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    transform: translateX(-100%);
+    visibility: hidden;
+    will-change: transform;
+    border-right: 1px solid rgba($color-white, 0.1);
+    box-shadow: 4px 0 8px rgba(0, 0, 0, 0.1);
+    
+    &.show {
+      transform: translateX(0);
+      visibility: visible;
+    }
+
+    // Improved scrollbar styling from your code
+    &::-webkit-scrollbar {
+      width: 8px;
+      
+      &-track { 
+        background: rgba($color-white, 0.05);
+      }
+      
+      &-thumb {
+        background-color: rgba($color-white, 0.2);
+        border-radius: 4px;
+        
+        &:hover {
+          background-color: rgba($color-white, 0.3);
+        }
+      }
+    }
+
+    // Content styling
+    .navbar-nav {
+      margin: auto 0;
+      width: 100%;
+      padding: 1rem 0;
+    }
+  }
+}
+
+// Update the body styles for sidebar open state
+@media (max-width: 1399px) {
+  body.sidebar-open {
+    overflow: hidden;
+    
+    #todo-container {
+      transform: translateX(280px);
+      transition: transform 0.3s ease-in-out;
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .navbar-collapse {
+    width: 100%;
+  }
+}
+
+// Update desktop styles to maintain proper alignment
+@media (min-width: 1400px) {
+  .navbar-collapse {
+    .navbar-nav {
+      margin: 10px 0;
+      padding: 0;
+    }
+  }
+}
+
+// Update the button styles in the navbar section
+.navbar {
+  // ... (keep existing navbar styles)
+
+  .btn-group {
+    .btn {
+      background: rgba($color-dark, 0.9);
+      color: $color-white;
+      box-shadow: none !important;
+      border: 1px solid transparent;
+      transition: all 0.2s ease-in-out;
+
+      &:hover,
+      &:focus {
+        background: rgba($color-white, 0.08) !important;
+        border-color: rgba($color-white, 0.2);
+      }
+
+      &:active {
+        transform: scale(0.98);
+      }
+    }
+
+    // Special styling for All To-Dos button
+    #all-todos {
+      box-shadow: none !important;
+      border: 1px solid transparent !important;
+      
+      &:hover,
+      &:focus {
+        background: rgba($color-white, 0.08) !important;
+        border-color: rgba($color-white, 0.2) !important;
+      }
+    }
+  }
+
+  // Maintain specific styles for action buttons
+  #create-todo,
+  #google-auth {
+    &:hover {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+    }
+  }
+}
+
+// Update general button styles
+.btn {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &:active {
+    transform: scale(0.98);
   }
 }
