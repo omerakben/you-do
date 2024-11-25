@@ -1,5 +1,6 @@
 import { createTodo, updateTodo } from '../api/todoAPI';
 import TodoList from './TodoList';
+import triggerConfetti from '../utils/confetti';
 
 const TodoForm = (user, obj = {}) => {
   const domString = `
@@ -61,6 +62,7 @@ const TodoForm = (user, obj = {}) => {
         });
     } else {
       createTodo(todoObj).then(() => {
+        triggerConfetti();
         document.querySelector('#form-container').classList.remove('active');
         document.querySelector('#form-container').innerHTML = '';
         TodoList(user);
