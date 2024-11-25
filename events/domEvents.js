@@ -1,6 +1,7 @@
 import { deleteTodo, updateTodo, getSingleTodo } from '../api/todoAPI';
 import TodoForm from '../components/TodoForm';
 import TodoList from '../components/TodoList';
+import triggerConfetti from '../utils/confetti';
 
 const domEvents = (user) => {
   document.querySelector('#app').addEventListener('click', (e) => {
@@ -34,8 +35,16 @@ const domEvents = (user) => {
       const { value: newStatus } = e.target;
 
       getSingleTodo(todoId).then((todoObj) => {
+        const oldStatus = todoObj.status;
         updateTodo({ ...todoObj, status: newStatus })
-          .then(() => TodoList(user));
+          .then(() => {
+            // Trigger confetti only when status changes to "Done"
+            if (newStatus === 'Done' && oldStatus !== 'Done') {
+              // Small delay to ensure the UI updates first
+              setTimeout(triggerConfetti, 100);
+            }
+            TodoList(user);
+          });
       });
     }
   });
