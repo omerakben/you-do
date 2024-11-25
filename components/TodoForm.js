@@ -3,19 +3,39 @@ import TodoList from './TodoList';
 import triggerConfetti from '../utils/confetti';
 
 const TodoForm = (user, obj = {}) => {
+  const formId = obj.firebaseKey ? `update-todo--${obj.firebaseKey}` : 'submit-todo';
+
   const domString = `
-    <form id="${obj.firebaseKey ? `update-todo--${obj.firebaseKey}` : 'submit-todo'}" class="todo-form">
+    <form id="${formId}" class="todo-form">
       <div class="form-group mb-3">
         <label for="title" class="form-label">To-Do Title</label>
-        <input type="text" class="form-control" id="title" placeholder="Enter To-Do" value="${obj.title || ''}" required>
+        <input 
+          type="text" 
+          class="form-control" 
+          id="title" 
+          placeholder="Enter To-Do" 
+          value="${obj.title || ''}" 
+          required
+          autocomplete="off"
+        >
       </div>
       <div class="form-group mb-3">
         <label for="description" class="form-label">Description</label>
-        <textarea class="form-control" id="description" rows="3" required>${obj.description || ''}</textarea>
+        <textarea 
+          class="form-control" 
+          id="description"
+          placeholder="Enter Description" 
+          rows="3" 
+          required
+        >${obj.description || ''}</textarea>
       </div>
       <div class="form-group mb-3">
-        <label for="priority" class="form-label">Priority</label>
+        <label for="priority" class="form-label d-flex justify-content-between align-items-center">
+          Priority
+          <small class="text-muted"><i class="fas fa-chevron-down"></i></small>
+        </label>
         <select class="form-control" id="priority" required>
+          <option value="" disabled ${!obj.priority ? 'selected' : ''}>Choose priority level...</option>
           <option value="critical" ${obj.priority === 'critical' ? 'selected' : ''}>Critical</option>
           <option value="high" ${obj.priority === 'high' ? 'selected' : ''}>High</option>
           <option value="medium" ${obj.priority === 'medium' ? 'selected' : ''}>Medium</option>
@@ -24,28 +44,38 @@ const TodoForm = (user, obj = {}) => {
         </select>
       </div>
       <div class="form-group mb-3">
-        <label for="status" class="form-label">Status</label>
+        <label for="status" class="form-label d-flex justify-content-between align-items-center">
+          Status
+          <small class="text-muted"><i class="fas fa-chevron-down"></i></small>
+        </label>
         <select class="form-control" id="status" required>
+          <option value="" disabled ${!obj.status ? 'selected' : ''}>Choose status...</option>
           <option value="ReadyToStart" ${obj.status === 'ReadyToStart' ? 'selected' : ''}>Ready To Start</option>
           <option value="InProgress" ${obj.status === 'InProgress' ? 'selected' : ''}>In Progress</option>
           <option value="Blocked" ${obj.status === 'Blocked' ? 'selected' : ''}>Blocked</option>
         </select>
       </div>
-      <button type="submit" class="btn btn-primary">
-        ${obj.firebaseKey ? 'Update' : 'Submit'}
-      </button>
+      <div class="d-flex justify-content-between align-items-center">
+        <button type="submit" class="btn btn-primary">
+          ${obj.firebaseKey ? 'Update' : 'Submit'}
+        </button>
+        <button type="button" class="btn btn-light" id="cancel-form">
+          Cancel
+        </button>
+      </div>
     </form>
   `;
 
-  document.querySelector('#form-container').innerHTML = domString;
+  const formContainer = document.querySelector('#form-container');
+  formContainer.innerHTML = domString;
 
   // Form Submit Handler
-  document.querySelector(`#${obj.firebaseKey ? `update-todo--${obj.firebaseKey}` : 'submit-todo'}`).addEventListener('submit', (e) => {
+  const handleFormSubmit = (e) => {
     e.preventDefault();
 
     const todoObj = {
-      title: document.querySelector('#title').value,
-      description: document.querySelector('#description').value,
+      title: document.querySelector('#title').value.trim(),
+      description: document.querySelector('#description').value.trim(),
       priority: document.querySelector('#priority').value,
       status: document.querySelector('#status').value,
       uid: user.uid,
@@ -53,21 +83,42 @@ const TodoForm = (user, obj = {}) => {
       updatedAt: new Date().toISOString(),
     };
 
+    const closeForm = () => {
+      formContainer.classList.remove('active');
+      setTimeout(() => {
+        formContainer.innerHTML = '';
+        TodoList(user);
+      }, 300);
+    };
+
     if (obj.firebaseKey) {
       updateTodo({ ...todoObj, firebaseKey: obj.firebaseKey })
-        .then(() => {
-          document.querySelector('#form-container').classList.remove('active');
-          document.querySelector('#form-container').innerHTML = '';
-          TodoList(user);
+        .then(closeForm)
+        .catch((error) => {
+          console.error('Error updating todo:', error);
+          // You could add error handling UI here
         });
     } else {
-      createTodo(todoObj).then(() => {
-        triggerConfetti();
-        document.querySelector('#form-container').classList.remove('active');
-        document.querySelector('#form-container').innerHTML = '';
-        TodoList(user);
-      });
+      createTodo(todoObj)
+        .then(() => {
+          triggerConfetti();
+          closeForm();
+        })
+        .catch((error) => {
+          console.error('Error creating todo:', error);
+          // You could add error handling UI here
+        });
     }
+  };
+
+  document.querySelector(`#${formId}`).addEventListener('submit', handleFormSubmit);
+
+  // Add event listener for cancel button
+  document.querySelector('#cancel-form').addEventListener('click', () => {
+    formContainer.classList.remove('active');
+    setTimeout(() => {
+      formContainer.innerHTML = '';
+    }, 300); // Match transition duration
   });
 };
 

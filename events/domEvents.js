@@ -5,26 +5,32 @@ import triggerConfetti from '../utils/confetti';
 
 const domEvents = (user) => {
   document.querySelector('#app').addEventListener('click', (e) => {
-    // Delete Todo
-    if (e.target.dataset.deleteId) {
+    // Edit Todo - Optimized handler
+    if (e.target.closest('[data-edit-id]')) {
+      e.preventDefault();
+      const editButton = e.target.closest('[data-edit-id]');
+      const formContainer = document.querySelector('#form-container');
+      formContainer.innerHTML = '';
+      formContainer.classList.add('active');
+      const todoId = editButton.dataset.editId;
+      getSingleTodo(todoId).then((todoObj) => {
+        TodoForm(user, todoObj);
+        setTimeout(() => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 100);
+      });
+    }
+
+    // Delete Todo - Optimized handler
+    if (e.target.closest('[data-delete-id]')) {
+      e.preventDefault();
+      const deleteButton = e.target.closest('[data-delete-id]');
       // eslint-disable-next-line no-alert
-      if (window.confirm('Are you sure?')) {
-        deleteTodo(e.target.dataset.deleteId).then(() => {
+      if (window.confirm('Are you sure you want to delete this todo?')) {
+        deleteTodo(deleteButton.dataset.deleteId).then(() => {
           TodoList(user);
         });
       }
-    }
-
-    // Edit Todo
-    if (e.target.dataset.editId) {
-      const formContainer = document.querySelector('#form-container');
-      formContainer.classList.add('active');
-
-      getSingleTodo(e.target.dataset.editId).then((todoObj) => {
-        TodoForm(user, todoObj);
-        // Scroll to top of the page
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
     }
   });
 
@@ -38,9 +44,7 @@ const domEvents = (user) => {
         const oldStatus = todoObj.status;
         updateTodo({ ...todoObj, status: newStatus })
           .then(() => {
-            // Trigger confetti only when status changes to "Done"
             if (newStatus === 'Done' && oldStatus !== 'Done') {
-              // Small delay to ensure the UI updates first
               setTimeout(triggerConfetti, 100);
             }
             TodoList(user);
@@ -53,13 +57,17 @@ const domEvents = (user) => {
   document.querySelector('#app').addEventListener('click', (e) => {
     if (e.target.id === 'add-todo-btn') {
       const formContainer = document.querySelector('#form-container');
-      formContainer.classList.toggle('active');
-
       if (formContainer.classList.contains('active')) {
-        TodoForm(user);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        formContainer.classList.remove('active');
+        setTimeout(() => {
+          formContainer.innerHTML = '';
+        }, 300); // Match transition duration
       } else {
-        formContainer.innerHTML = '';
+        formContainer.classList.add('active');
+        TodoForm(user);
+        setTimeout(() => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 100);
       }
     }
   });
