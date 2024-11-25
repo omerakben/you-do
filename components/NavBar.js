@@ -1,63 +1,57 @@
 import { signIn, signOut } from '../utils/auth';
+import * as svgIcons from '../src/assets/svg';
 
+// Renders navigation bar component with user authentication state
 const NavBar = (user) => {
+  // Create navigation HTML string with conditional rendering based on user auth status
   const domString = `
-    <nav class="navbar navbar-expand-xxl navbar-dark bg-dark fixed-top" role="navigation">
+    <nav class="navbar navbar-expand-xxl navbar-dark fixed-top" role="navigation" style="background: #181b34 !important;">
       <div class="container-fluid">
-        <!-- Navbar Brand and Hamburger -->
-        <div class="d-flex align-items-center">
-          <a class="navbar-brand" href="#" aria-label="To-Do App Home">
-            <i class="fas fa-tasks" aria-hidden="true"></i> To-Do App
-          </a>
-          ${user ? `
-            <button class="navbar-toggler ms-3 d-xxl-none" type="button" 
-              data-bs-toggle="collapse" 
-              data-bs-target="#navbarContent" 
-              aria-controls="navbarContent" 
-              aria-expanded="false" 
-              aria-label="Toggle navigation menu">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-          ` : ''}
-        </div>
-
+        <a class="navbar-brand text-white d-flex align-items-center" href="#" aria-label="To-Do App Home">
+          <i class="fas fa-tasks" aria-hidden="true"></i>
+          <span class="ms-3">To-Do</span>
+        </a>
         ${user ? `
-        <!-- Collapsible Navbar Content -->
+        <div class="d-flex align-items-center">
+          <button class="navbar-toggler ms-0" type="button" 
+            data-bs-toggle="collapse" 
+            data-bs-target="#navbarContent" 
+            aria-controls="navbarContent" 
+            aria-expanded="false" 
+            aria-label="Toggle navigation menu">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
         <div class="collapse navbar-collapse" id="navbarContent" role="menu">
           <div class="navbar-nav flex-column flex-xxl-row w-100 align-items-start align-items-xxl-center">
-            <!-- Filter Buttons -->
             <div class="btn-group flex-column flex-xxl-row my-2 my-xxl-0" role="group" aria-label="Todo filters">
               <button class="btn btn-outline-light d-flex align-items-center gap-2" id="all-todos" role="menuitem">
                 <i class="fas fa-list" aria-hidden="true"></i> All To-Dos
               </button>
               <button class="btn btn-outline-light d-flex align-items-center gap-2" data-status="ReadyToStart" role="menuitem">
-                <img src="/images/svg/ready.svg" class="status-icon" alt="" aria-hidden="true" />
+                <img src="${svgIcons.ready}" class="status-icon" alt="" aria-hidden="true" style="filter: invert(1);" />
                 Ready To Start
               </button>
               <button class="btn btn-outline-light d-flex align-items-center gap-2" data-status="InProgress" role="menuitem">
-                <img src="/images/svg/inProgress.svg" class="status-icon" alt="" aria-hidden="true" />
+                <img src="${svgIcons.inProgress}" class="status-icon" alt="" aria-hidden="true" style="filter: invert(1);" />
                 In Progress
               </button>
               <button class="btn btn-outline-light d-flex align-items-center gap-2" data-status="Blocked" role="menuitem">
-                <img src="/images/svg/blocked.svg" class="status-icon" alt="" aria-hidden="true" />
+                <img src="${svgIcons.blocked}" class="status-icon" alt="" aria-hidden="true" style="filter: invert(1);" />
                 Blocked
               </button>
               <button class="btn btn-outline-light d-flex align-items-center gap-2" data-status="Done" role="menuitem">
-                <img src="/images/svg/done.svg" class="status-icon" alt="" aria-hidden="true" />
+                <img src="${svgIcons.done}" class="status-icon" alt="" aria-hidden="true" style="filter: invert(1);" />
                 Done
               </button>
             </div>
-            
-            <!-- Add To-Do Button -->
-            <button class="btn btn-success d-flex align-items-center justify-content-center gap-3 px-4" 
+            <button class="btn btn-success d-flex align-items-center justify-content-center gap-3 px-4 ms-xxl-auto" 
               id="create-todo" 
               style="min-width: 150px;"
               role="menuitem"
               aria-label="Create new todo">
               <i class="fas fa-plus" aria-hidden="true"></i> Add To-Do
             </button>
-
-            <!-- Sign Out Button -->
             <div class="mt-2 mt-xxl-0 ms-xxl-3">
               <button class="btn btn-danger" id="google-auth" role="menuitem">
                 <i class="fas fa-sign-out-alt" aria-hidden="true"></i> Sign Out
@@ -67,18 +61,20 @@ const NavBar = (user) => {
         </div>
         <div class="navbar-backdrop"></div>
         ` : `
-        <!-- Sign In Button -->
-        <button class="btn btn-primary ms-auto" id="google-auth">
-          <i class="fas fa-sign-in-alt" aria-hidden="true"></i> Sign In with Google
-        </button>
+        <div class="w-100 d-flex justify-content-center align-items-center" style="min-height: calc(100vh - 70px);">
+          <button class="btn btn-primary btn-lg px-5 py-3" id="google-auth">
+            <i class="fas fa-sign-in-alt me-2" aria-hidden="true"></i> Sign In with Google
+          </button>
+        </div>
         `}
       </div>
     </nav>
   `;
 
+  // Insert navigation HTML into DOM
   document.querySelector('#navigation').innerHTML = domString;
 
-  // Add event listener for auth button
+  // Add click handler for authentication button
   document.querySelector('#google-auth').addEventListener('click', () => {
     if (user) {
       signOut();
@@ -87,7 +83,7 @@ const NavBar = (user) => {
     }
   });
 
-  // Update the sidebar toggle functionality
+  // Setup mobile navigation functionality for authenticated users
   if (user) {
     const navbar = document.querySelector('.navbar-collapse');
     const toggleButton = document.querySelector('.navbar-toggler');
@@ -95,12 +91,11 @@ const NavBar = (user) => {
     let touchStartX = 0;
     let touchEndX = 0;
 
+    // Toggle mobile sidebar visibility with animation handling
     const toggleSidebar = (show, immediate = false) => {
       if (isTransitioning && !immediate) return;
-
       isTransitioning = true;
       document.body.style.overflow = show ? 'hidden' : '';
-
       if (show) {
         navbar.classList.add('show');
         document.body.classList.add('sidebar-open');
@@ -110,30 +105,27 @@ const NavBar = (user) => {
         document.body.classList.remove('sidebar-open');
         toggleButton.setAttribute('aria-expanded', 'false');
       }
-
-      // Reset transitioning flag after animation completes
       setTimeout(() => {
         isTransitioning = false;
       }, 300);
     };
 
-    // Handle sidebar toggle button click
+    // Handle hamburger menu button click
     toggleButton.addEventListener('click', (e) => {
       e.preventDefault();
       toggleSidebar(!navbar.classList.contains('show'));
     });
 
-    // Touch events for swipe
+    // Track touch start position for swipe detection
     document.addEventListener('touchstart', (e) => {
       touchStartX = e.changedTouches[0].screenX;
     }, { passive: true });
 
+    // Handle swipe gestures for mobile sidebar
     document.addEventListener('touchend', (e) => {
       touchEndX = e.changedTouches[0].screenX;
       const swipeDistance = touchEndX - touchStartX;
-
       if (window.innerWidth < 1400) {
-        // Swipe right to open
         if (swipeDistance > 50 && touchStartX < 30) {
           toggleSidebar(true);
         } else if (swipeDistance < -50 && navbar.classList.contains('show')) {
@@ -149,7 +141,7 @@ const NavBar = (user) => {
       }
     });
 
-    // Close sidebar when clicking on a nav item
+    // Close sidebar when clicking any button in mobile view
     navbar.querySelectorAll('button').forEach((button) => {
       button.addEventListener('click', () => {
         if (window.innerWidth < 1400) {
@@ -158,7 +150,7 @@ const NavBar = (user) => {
       });
     });
 
-    // Handle resize events
+    // Handle window resize to properly display navigation
     let resizeTimeout;
     window.addEventListener('resize', () => {
       clearTimeout(resizeTimeout);
@@ -169,7 +161,7 @@ const NavBar = (user) => {
       }, 250);
     });
 
-    // Handle escape key
+    // Close sidebar on Escape key press
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && navbar.classList.contains('show')) {
         toggleSidebar(false);

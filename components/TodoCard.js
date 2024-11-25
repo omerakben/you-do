@@ -1,3 +1,5 @@
+import * as svgIcons from '../src/assets/svg';
+
 const TodoCard = (todoObj) => {
   const getStatusClass = (status) => {
     const classes = {
@@ -24,23 +26,23 @@ const TodoCard = (todoObj) => {
   const getPriorityIndicator = (priority) => {
     const indicators = {
       critical: {
-        icon: '<img src="/images/svg/critical.svg" class="priority-icon critical" alt="Critical Priority" />',
+        icon: `<img src="${svgIcons.critical}" class="priority-icon critical" alt="Critical Priority" />`,
         class: 'priority-critical'
       },
       high: {
-        icon: '<img src="/images/svg/high.svg" class="priority-icon high" alt="High Priority" />',
+        icon: `<img src="${svgIcons.high}" class="priority-icon high" alt="High Priority" />`,
         class: 'priority-high'
       },
       medium: {
-        icon: '<img src="/images/svg/medium.svg" class="priority-icon medium" alt="Medium Priority" />',
+        icon: `<img src="${svgIcons.medium}" class="priority-icon medium" alt="Medium Priority" />`,
         class: 'priority-medium'
       },
       low: {
-        icon: '<img src="/images/svg/low.svg" class="priority-icon low" alt="Low Priority" />',
+        icon: `<img src="${svgIcons.low}" class="priority-icon low" alt="Low Priority" />`,
         class: 'priority-low'
       },
       trivial: {
-        icon: '<img src="/images/svg/trivial.svg" class="priority-icon trivial" alt="Trivial Priority" />',
+        icon: `<img src="${svgIcons.trivial}" class="priority-icon trivial" alt="Trivial Priority" />`,
         class: 'priority-trivial'
       }
     };

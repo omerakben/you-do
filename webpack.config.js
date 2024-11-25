@@ -9,6 +9,12 @@ const dotenv = require('dotenv').config({path: __dirname + '/.env'});
 
 module.exports = {
   entry: './public/main.js',
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/',
+    filename: '[name].bundle.js',
+    assetModuleFilename: 'assets/[name][ext]'
+  },
   plugins: [
     new HtmlWebPackPlugin({
       hash: true,
@@ -19,7 +25,7 @@ module.exports = {
       filename: "[name].css",
       chunkFilename: "[id].css"
     }),
-    new webpack.DefinePlugin( {
+    new webpack.DefinePlugin({
       'process.env': JSON.stringify(process.env || dotenv.parsed),
     }),
     new ESLintPlugin()
@@ -30,37 +36,43 @@ module.exports = {
         test: /\.scss$/,
         use: [
           MiniCssExtractPlugin.loader,
-          { loader: 'css-loader', options: { sourceMap: true, importLoaders: 1 } },
-          { 
-            loader: 'sass-loader', 
-            options: { 
+          {
+            loader: 'css-loader',
+            options: {
               sourceMap: true,
-              sassOptions: {
-                quietDeps: true
-              }
-            } 
+              importLoaders: 1
+            }
           },
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true,
+              implementation: require('sass'),
+              sassOptions: {
+                quietDeps: true,
+                outputStyle: 'expanded'
+              }
+            }
+          }
         ],
       },
       {
         test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
       {
-        test: /\.(png|svg|jpg|jpeg|gif)$/,
-        use: ['file-loader']
+        test: /\.(png|jpe?g|gif)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/[name][ext]'
+        }
       },
       {
-        test: /\.(woff|ttf|eot|svg)(\?v=[a-z0-9]\.[a-z0-9]\.[a-z0-9])?$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[name].[ext]',
-              outputPath: 'fonts/'
-            }
-          }
-        ]
+        test: /\.svg$/,
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/svg/[name][ext]'
+        }
       }
     ]
   },
@@ -70,8 +82,12 @@ module.exports = {
       new CssMinimizerPlugin()
     ]
   },
-  // Opens browser on run of npm start 
   devServer: {
-    open: true
+    open: true,
+    historyApiFallback: true,
+    static: {
+      directory: path.join(__dirname, 'public'),
+      publicPath: '/'
+    }
   }
 };
