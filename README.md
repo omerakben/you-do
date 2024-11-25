@@ -10,6 +10,7 @@ A dynamic, responsive Todo management application built with vanilla JavaScript 
 - **Create Tasks**: Add new todos with title, description, priority level, and status
 - **Update Tasks**: Edit existing todos with real-time updates
 - **Delete Tasks**: Remove todos with confirmation dialog
+- **Celebration**: Animated confetti celebration when tasks are marked as complete
 - **Priority Levels**: 
   - Critical
   - High
@@ -17,11 +18,12 @@ A dynamic, responsive Todo management application built with vanilla JavaScript 
   - Low
   - Trivial
 
+### Status Management
 - **Status**: 
   - Ready 
   - In Progress
   - Blocked
-  - Done
+  - Done (triggers celebration animation)
 
 ### Filtering & Organization
 - Filter todos by status

@@ -64,6 +64,8 @@
 
     "bootstrap": "^5.1.0",
 
+    "canvas-confetti": "^1.9.3",
+
     "dotenv": "^10.0.0",
 
     "firebase": "^8.2.0",
@@ -73,3 +75,4 @@
   }
 
 }
+
