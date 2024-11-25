@@ -35,8 +35,7 @@ const navEvents = (user) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
-  // Search functionality is now handled directly in TodoList component
-  // We only need to handle the initial page load search if needed
+  // Search functionality is handled directly in TodoList component
   const initialSearchInput = document.querySelector('#search-input');
   if (initialSearchInput && initialSearchInput.value) {
     TodoList(user, null, initialSearchInput.value.trim());
